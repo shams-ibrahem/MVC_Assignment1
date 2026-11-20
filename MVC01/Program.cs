@@ -1,3 +1,5 @@
+using MVC01.Middleware;
+
 namespace MVC01
 {
     public class Program
@@ -11,6 +13,8 @@ namespace MVC01
 
             var app = builder.Build();
 
+            app.UseMiddleware<RequestTimeMiddleware>();
+
             // Configure the HTTP request pipeline.
             if (!app.Environment.IsDevelopment())
             {
@@ -20,11 +24,11 @@ namespace MVC01
             }
 
             app.UseHttpsRedirection();
+
             app.UseRouting();
 
-            app.UseAuthorization();
-
             app.MapStaticAssets();
+
             app.MapControllerRoute(
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}")
